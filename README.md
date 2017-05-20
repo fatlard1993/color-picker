@@ -8,7 +8,7 @@ var picker = ColorPicker.create();
 document.body.appendChild(picker.elem);
 
 function pointerDown(evt){
-	if(evt.ctrlKey) alert(picker.get());
+  if(evt.ctrlKey) alert(picker.get());
   else ColorPicker.onPointerDown(evt);
 }
 
