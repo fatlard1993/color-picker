@@ -1,6 +1,6 @@
 var ColorPicker = {
   saturationSVG: '<svg width="100%" height="100%"><defs><linearGradient id="gradient-black" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" stop-color="#000000" stop-opacity="1"></stop><stop offset="100%" stop-color="#CC9A81" stop-opacity="0"></stop></linearGradient><linearGradient id="gradient-white" x1="0%" y1="100%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"></stop><stop offset="100%" stop-color="#CC9A81" stop-opacity="0"></stop></linearGradient></defs><rect x="0" y="0" width="100%" height="100%" fill="url(#gradient-white)"></rect><rect x="0" y="0" width="100%" height="100%" fill="url(#gradient-black)"></rect></svg>',
-  hueSVG: '<svg width="100%" height="100%"><defs><linearGradient id="gradient-hue" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" stop-color="#FF0000" stop-opacity="1"></stop><stop offset="13%" stop-color="#FF00FF" stop-opacity="1"></stop><stop offset="25%" stop-color="#8000FF" stop-opacity="1"></stop><stop offset="38%" stop-color="#0040FF" stop-opacity="1"></stop><stop offset="50%" stop-color="#00FFFF" stop-opacity="1"></stop><stop offset="63%" stop-color="#00FF40" stop-opacity="1"></stop><stop offset="75%" stop-color="#0BED00" stop-opacity="1"></stop><stop offset="88%" stop-color="#FFFF00" stop-opacity="1"></stop><stop offset="100%" stop-color="#FF0000" stop-opacity="1"></stop></linearGradient></defs><rect x="0" y="0" width="100%" height="100%" fill="url(#gradient-hue)"></rect></svg>',
+  hueSVG: '<svg width="100%" height="100%"><defs><linearGradient id="gradient-hue" x1="100%" y1="0%" x2="0%" y2="0%"><stop offset="0%" stop-color="#FF0000" stop-opacity="1"></stop><stop offset="13%" stop-color="#FF00FF" stop-opacity="1"></stop><stop offset="25%" stop-color="#8000FF" stop-opacity="1"></stop><stop offset="38%" stop-color="#0040FF" stop-opacity="1"></stop><stop offset="50%" stop-color="#00FFFF" stop-opacity="1"></stop><stop offset="63%" stop-color="#00FF40" stop-opacity="1"></stop><stop offset="75%" stop-color="#0BED00" stop-opacity="1"></stop><stop offset="88%" stop-color="#FFFF00" stop-opacity="1"></stop><stop offset="100%" stop-color="#FF0000" stop-opacity="1"></stop></linearGradient></defs><rect x="0" y="0" width="100%" height="100%" fill="url(#gradient-hue)"></rect></svg>',
   log: function(){
     if(ColorPicker.debug) console.log.apply(null, arguments);
   },
@@ -12,11 +12,11 @@ var ColorPicker = {
       position.y = evt.targetTouches[0].pageY;
 
       var parent = evt.target;
-      while(parent.parentElement){
+      while(parent.offsetParent){
         position.x -= parent.offsetLeft;
         position.y -= parent.offsetTop;
 
-        parent = parent.parentElement;
+        parent = parent.offsetParent;
       }
     }
     else{
@@ -64,7 +64,7 @@ var ColorPicker = {
 
         pickerArea.style.backgroundColor = 'hsl('+ color.h +', 100%, 50%)';
 
-        hueIndicator.style.top = Math.round((color.h * 150) / 360) +'px';
+        hueIndicator.style.left = Math.round((color.h * 150) / 360) +'px';
       },
       get: function(){ return element.style.backgroundColor; }
     };
@@ -151,6 +151,9 @@ var ColorPicker = {
     var position = ColorPicker.normalizePosition(evt);
     var indicator = evt.target.getElementsByClassName('indicator')[0];
 
+    position.y = Math.min(Math.max(0, position.y), 150);
+    position.x = Math.min(Math.max(0, position.x), 150); 
+
     indicator.style.top = (position.y - 3) +'px';
     indicator.style.left = (position.x - 3) +'px';
 
@@ -175,6 +178,9 @@ var ColorPicker = {
 
     var position = ColorPicker.normalizePosition(evt);
     var indicator = evt.target.getElementsByClassName('indicator')[0];
+
+    position.y = Math.min(Math.max(0, position.y), 150);
+    position.x = Math.min(Math.max(0, position.x), 150); 
     
     indicator.style.top = (position.y - 9) +'px';
 
@@ -205,7 +211,7 @@ var ColorPicker = {
     }
 
     else if(evt.target.className === 'hueSlide'){
-      ColorPicker.movePicker(evt);
+      ColorPicker.moveHueSlider(evt);
 
       document.addEventListener('mouseup', ColorPicker.dropHueSlider);
       document.addEventListener('mousemove', ColorPicker.moveHueSlider);
