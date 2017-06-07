@@ -13,8 +13,8 @@ var ColorPicker = {
 
       var parent = evt.target;
       while(parent.offsetParent){
-        position.x -= parent.offsetLeft;
-        position.y -= parent.offsetTop;
+        position.x -= parent.offsetLeft - parent.scrollLeft;
+        position.y -= parent.offsetTop - parent.scrollTop;
 
         parent = parent.offsetParent;
       }
@@ -23,6 +23,9 @@ var ColorPicker = {
       position.x = evt.offsetX;
       position.y = evt.offsetY;
     }
+
+    position.x = Math.min(Math.max(0, position.x), evt.target.clientWidth);
+    position.y = Math.min(Math.max(0, position.y), evt.target.clientHeight);
 
     return position;
   },
@@ -64,7 +67,7 @@ var ColorPicker = {
 
         pickerArea.style.backgroundColor = 'hsl('+ color.h +', 100%, 50%)';
 
-        hueIndicator.style.left = Math.round((color.h * 150) / 360) +'px';
+        hueIndicator.style.left = Math.round((color.h * element.clientWidth) / 360) +'px';
       },
       get: function(){ return element.style.backgroundColor; }
     };
@@ -149,17 +152,14 @@ var ColorPicker = {
     evt.preventDefault();
 
     var position = ColorPicker.normalizePosition(evt);
-    var indicator = evt.target.getElementsByClassName('indicator')[0];
+    var indicator = evt.target.getElementsByClassName('indicator')[0]; 
 
-    position.y = Math.min(Math.max(0, position.y), 150);
-    position.x = Math.min(Math.max(0, position.x), 150); 
-
-    indicator.style.top = (position.y - 3) +'px';
     indicator.style.left = (position.x - 3) +'px';
+    indicator.style.top = (position.y - 3) +'px';
 
     var h = evt.target.parentElement.getAttribute('data-color-h');
-    var s = position.x / 150;
-    var v = (150 - position.y) / 150;
+    var s = position.x / element.clientWidth;
+    var v = (element.clientHeight - position.y) / element.clientHeight;
 
     evt.target.parentElement.setAttribute('data-color-s', s);
     evt.target.parentElement.setAttribute('data-color-v', v);
@@ -178,13 +178,10 @@ var ColorPicker = {
 
     var position = ColorPicker.normalizePosition(evt);
     var indicator = evt.target.getElementsByClassName('indicator')[0];
-
-    position.y = Math.min(Math.max(0, position.y), 150);
-    position.x = Math.min(Math.max(0, position.x), 150); 
     
-    indicator.style.top = (position.y - 9) +'px';
+    indicator.style.left = (position.x - 9) +'px';
 
-    var h = (position.y / 150) * 360;
+    var h = (position.x / element.clientWidth) * 360;
     var s = evt.target.parentElement.getAttribute('data-color-s');
     var v = evt.target.parentElement.getAttribute('data-color-v');
 
