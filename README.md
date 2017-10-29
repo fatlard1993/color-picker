@@ -2,15 +2,15 @@
 A simple no-frills js color picker
 
 ## Setup for dev
-``` npm i ```
-``` npm i -g gulp ```
+ * ``` npm i ```
+ * ``` npm i -g gulp ```
 
 ## Live dev demo
 ``` gulp dev ```
 
 ## Include in your project
 Everything you need to get started is in src/js/ColorPicker.js and src/scss/ColorPicker.scss
-
+Feel free to hack and slash this into whatever you want it to be
 
 ## Methods on ColorPicker
 
