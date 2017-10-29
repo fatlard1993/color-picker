@@ -1,0 +1,8 @@
+{
+  "name": "index.js",
+  "babel": true,
+  "includes": [
+    "src/js/ColorPicker.js",
+    "src/js/index.js"
+  ]
+}

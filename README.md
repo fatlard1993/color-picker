@@ -1,37 +1,47 @@
 # color-picker
-a simple no-frills pure js color picker
+A simple no-frills js color picker
 
-# useage
+## Setup for dev
+``` npm i ```
+``` npm i -g gulp ```
+
+## Live dev demo
+``` gulp dev ```
+
+## Include in your project
+Everything you need to get started is in src/js/ColorPicker.js and src/scss/ColorPicker.scss
+
+
+## Methods on ColorPicker
+
+### create (color)
+Returns a colorPicker element
+ * color::"#666" | Overwrites the default color, uses colorPicker.set (see below)
+
+### randomColor ()
+Returns a random hex-formatted color
+
+### onPointerDown (evt)
+Intended to be placed inside an existing pointerDown function like so: (reduces total event listener count)
 ```
-var picker = ColorPicker.create();
-picker.set('#BADA55');// accepts rgb, rgba (ignores alpha), hsl, and hex
-
-document.body.appendChild(picker.elem);
-
 function pointerDown(evt){
-  if(evt.which === 2 || evt.which === 3 || !evt.cancelable) return;
+    ...
 
-  if(evt.ctrlKey) alert(picker.get());
-  else ColorPicker.onPointerDown(evt);
+    ColorPicker.onPointerDown(evt);
 }
 
 document.addEventListener('mousedown', pointerDown);
 document.addEventListener('touchstart', pointerDown);
-
-
-<h1>A simple js color picker demo</h1>
-
-
-body{
-  width: 400px;
-  padding: 10px;
-  border: 2px outset #c3c3c3;
-  border-radius: 3px;
-  
-  h1{
-    font-size: 22px;
-    text-align: center;
-    margin: 0 0 10px;
-  }
-}
 ```
+
+But can just as easily be added in like this:
+```
+document.addEventListener('mousedown', ColorPicker.onPointerDown);
+document.addEventListener('touchstart', ColorPicker.onPointerDown);
+```
+
+## Methods on colorPicker element
+
+### set (color)
+Sets the colorPicker color to the provided value
+ * color | Accepted formats: rgb, rgba (ignores alpha), hsl, and hex
