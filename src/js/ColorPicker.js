@@ -71,7 +71,9 @@ var ColorPicker = {
     this.log()('ColorPicker', 'HSVfromString', color);
 
     if(color[0] === '#' && (color.length === 4 || color.length === 7)){
-      if(color.length === 4) color = color + color.substr(1, 3);
+      if(color.length === 4){
+        color = '#'+ color.substr(1, 1) + color.substr(1, 1) + color.substr(2, 2) + color.substr(2, 2) + color.substr(3, 3) + color.substr(3, 3);
+      }
 
       return ColorPicker.rgb_hsv(parseInt(color.substr(1, 2), 16), parseInt(color.substr(3, 2), 16), parseInt(color.substr(5, 2), 16));
     }
