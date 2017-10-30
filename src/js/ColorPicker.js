@@ -34,8 +34,6 @@ var ColorPicker = {
       color = colorPicker.color = ColorPicker.HSVfromString(color);
 
       pickerArea.style.backgroundColor = 'hsl('+ color.h +', 100%, 50%)';
-
-      hueIndicator.style.left = Math.round((color.h * (pickerIndicator.offsetWidth / 2)) / 360) +'px';
     };
 
     colorPicker.set(defaultColor || '#666');
