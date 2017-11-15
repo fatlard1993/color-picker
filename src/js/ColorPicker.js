@@ -50,7 +50,7 @@ var ColorPicker = {
     return '#'+ Math.floor(Math.random() * 16777215).toString(16);
   },
   HSVtoRGBString: function(hue, sat, value){
-    this.log()('ColorPicker', 'HSVtoRGBString', hue, sat, value);
+    ColorPicker.log()('ColorPicker', 'HSVtoRGBString', hue, sat, value);
     var R, G, B, X, C;
     var h = (hue % 360) / 60;
 
@@ -66,7 +66,7 @@ var ColorPicker = {
     return 'rgb('+ Math.floor(R * 255) +','+ Math.floor(G * 255) +','+ Math.floor(B * 255) +')';
   },
   HSVfromString: function(color){
-    this.log()('ColorPicker', 'HSVfromString', color);
+    ColorPicker.log()('ColorPicker', 'HSVfromString', color);
 
     if(color[0] === '#' && (color.length === 4 || color.length === 7)){
       if(color.length === 4){
@@ -84,14 +84,14 @@ var ColorPicker = {
 
       for(var i = 0; i < color.length; i++) color[i] = parseInt(color[i]) || 0;
 
-      this.log()('ColorPicker', 'HSVfromString', type, color);
+      ColorPicker.log()('ColorPicker', 'HSVfromString', type, color);
 
-      if(!ColorPicker[type +'_hsv']) this.log()('ColorPicker', 'HSVfromString', type, ' is an unsupported color type');
+      if(!ColorPicker[type +'_hsv']) ColorPicker.log()('ColorPicker', 'HSVfromString', type, ' is an unsupported color type');
       else return ColorPicker[type +'_hsv'].apply(null, color);
     }
   },
   hsl_hsv: function(hue, sat, light){
-    this.log()('ColorPicker', 'hsl_hsv', hue, sat, light);
+    ColorPicker.log()('ColorPicker', 'hsl_hsv', hue, sat, light);
 
     sat /= 100;
     light /= 100;
@@ -100,12 +100,12 @@ var ColorPicker = {
 
     var hsv = { h: hue, s: 2 * sat / (light + sat), v: light + sat };
 
-    this.log()('ColorPicker', 'hsl_hsv', hsv);
+    ColorPicker.log()('ColorPicker', 'hsl_hsv', hsv);
 
     return hsv;
   },
   rgb_hsv: function(red, green, blue){
-    this.log()('ColorPicker', 'rgb_hsv', red, green, blue);
+    ColorPicker.log()('ColorPicker', 'rgb_hsv', red, green, blue);
 
     red /= 255;
     green /= 255;
@@ -122,7 +122,7 @@ var ColorPicker = {
 
     var hsv = { h: hue, s: sat, v: value };
 
-    this.log()('ColorPicker', 'rgb_hsv', hsv);
+    ColorPicker.log()('ColorPicker', 'rgb_hsv', hsv);
 
     return hsv;
   },
