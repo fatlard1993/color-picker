@@ -5,7 +5,7 @@ A simple no-frills js color picker
 
 ## Setup for dev
 
-```npm i```
+```./SETUP```
 
 
 ## Live dev demo
@@ -15,9 +15,9 @@ A simple no-frills js color picker
 
 ## Include in your project
 
-Everything you need to get started is in ```src/js/ColorPicker.js``` and ```src/scss/ColorPicker.scss```
+Everything you need to get started is in ```client/js/ColorPicker.js``` and ```client/scss/_colorPicker.scss```
 Feel free to hack and slash this into whatever you want it to be.
-Checkout ```src/js/index.js``` for a simplistic implementation
+Checkout ```client/js/index/index.js``` for a simplistic implementation
 
 
 ## Methods on the global ColorPicker object
@@ -66,7 +66,7 @@ Sets the colorPicker color to the provided value
 
 If you are using linux and run into this error:
 ```
-Error: watch /home/chase/Projects/color-picker/src/js/ ENOSPC
+Error: watch /home/chase/Projects/color-picker/client/js/ ENOSPC
 	at exports._errnoException (util.js:1022:11)
 	at FSWatcher.start (fs.js:1305:19)
 	at Object.fs.watch (fs.js:1330:11)
