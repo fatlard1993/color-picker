@@ -1,62 +1,57 @@
-const fs = require('fs');
-
 const gulp = require('gulp');
-const sass = require('gulp-sass');
-const autoprefixer = require('gulp-autoprefixer');
-const babel = require('gulp-babel');//&& babel-core && babel-preset-env
-const concat = require('gulp-concat');
 const browserSync = require('browser-sync').create();
 
-const autoprefixerOptions = {
-	flexBox: 'no-2009',
-	browsers: ['last 10 versions'],
-	cascade: false
-};
+const compileSCSS = require('../swiss-army-knife/gulp/compileSCSS');
+const compileJS = require('../swiss-army-knife/gulp/compileJS');
+const compileHTML = require('../swiss-army-knife/gulp/compileHTML');
+const notify = require('../swiss-army-knife/gulp/notify');
 
-const babelOptions = {
-	presets: ['env']
-};
+const Log = require('../swiss-army-knife/js/_log');
 
 const browserSyncOptions = {
 	server: {
-		baseDir: 'out'
+		baseDir: 'client/public'
 	}
 };
 
-function concatJS(name, files, applyBabel){
-	var proc = gulp.src(files).pipe(concat(name));
-
-	if(applyBabel) proc.pipe(babel(babelOptions));
-
-	proc.pipe(gulp.dest('out/js')).pipe(browserSync.stream());
-}
-
-gulp.task('compile', ['compile-js', 'compile-css', 'update-html']);
+gulp.task('compile', ['compile-js', 'compile-css', 'compile-html']);
 
 gulp.task('default', ['compile']);
 
 gulp.task('dev', ['compile'], function(){
 	browserSync.init(browserSyncOptions);
 
-	gulp.watch('src/js/**/*.js', ['compile-js']);
-	gulp.watch('src/scss/*.scss', ['compile-css']);
-	gulp.watch('src/*.html', ['update-html']);
+	gulp.watch('client/js/*.js', ['compile-js']);
+	gulp.watch('client/js/**/*.js', ['compile-js']);
+	gulp.watch('client/scss/*.scss', ['compile-css']);
+	gulp.watch('client/html/*.html', ['update-html']);
+});
+
+gulp.task('dist', function(){
+	gulp.src('server/*').pipe(gulp.dest('dist'));
+	gulp.src('server/**/*').pipe(gulp.dest('dist'));
+
+	gulp.src('client/public/js/*').pipe(gulp.dest('dist/public/js'));
+	gulp.src('client/public/css/*').pipe(gulp.dest('dist/public/css'));
+	gulp.src('client/public/html/*').pipe(gulp.dest('dist/public/html'));
+
+	gulp.src('../swiss-army-knife/client/fonts/*').pipe(gulp.dest('dist/public/fonts'));
+
+	gulp.src('../swiss-army-knife/js/_log.js').pipe(gulp.dest('dist'));
+	gulp.src('../swiss-army-knife/js/_common.js').pipe(gulp.dest('dist'));
+
+	notify('done!');
 });
 
 gulp.task('compile-js', function(){
-	fs.readFile('src/js/output.json', function(err, data){
-		var outputSettings = JSON.parse(data);
-
-		concatJS(outputSettings.name, outputSettings.includes, outputSettings.babel);
-	});
+	compileJS('client/js', 'client/public/js');
 });
 
 gulp.task('compile-css', function(){
-	var proc = gulp.src('src/scss/*.scss').pipe(sass().on('error', sass.logError));
-
-	proc.pipe(autoprefixer(autoprefixerOptions)).pipe(gulp.dest('out/css')).pipe(browserSync.stream());
+	compileSCSS('client/scss', 'client/public/css');
 });
 
-gulp.task('update-html', function(){
-	gulp.src('src/*.html').pipe(gulp.dest('out')).pipe(browserSync.stream());
+gulp.task('compile-html', function(){
+	// compileHTML('client/html', 'client/public/html');
+	gulp.src('client/html/index.html').pipe(gulp.dest('client/public'));
 });
