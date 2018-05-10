@@ -8,7 +8,7 @@ div.colorPicker {
 		width: 150px;
 		height: 150px;
 		margin: 0 auto;
-		outline: 2px solid $grey-darker;
+		box-shadow: 0px 0px 0px 2px $grey-darker;
 
 		* {
 			pointer-events: none;
@@ -33,7 +33,7 @@ div.colorPicker {
 		width: 150px;
 		height: 30px;
 		margin: 10px auto 0;
-		outline: 2px solid $grey-darker;
+		box-shadow: 0px 0px 0px 2px $grey-darker;
 
 		* {
 			pointer-events: none;
