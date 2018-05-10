@@ -1,10 +1,10 @@
 const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
 
-const compileSCSS = require('../swiss-army-knife/gulp/compileSCSS');
-const compileJS = require('../swiss-army-knife/gulp/compileJS');
-const compileHTML = require('../swiss-army-knife/gulp/compileHTML');
-const notify = require('../swiss-army-knife/gulp/notify');
+const compileSCSS = require('../swiss-army-knife/gulpfiles/compileSCSS');
+const compileJS = require('../swiss-army-knife/gulpfiles/compileJS');
+const compileHTML = require('../swiss-army-knife/gulpfiles/compileHTML');
+const notify = require('../swiss-army-knife/gulpfiles/notify');
 
 const Log = require('../swiss-army-knife/js/_log');
 
