@@ -3,6 +3,12 @@
 A simple no-frills js color picker
 
 
+## Prerequisites
+
+1. Linux or UNIX
+2. node.js >= V6.10.1 [Check out NVM](https://github.com/creationix/nvm)
+3. ```npm i -g eslint gulp```
+
 ## Setup for dev
 
 ```./SETUP```
