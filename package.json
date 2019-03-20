@@ -2,7 +2,7 @@
   "name": "color-picker",
   "version": "1.0.0",
   "description": "A simple no-frills js color picker",
-  "main": "gulpfile.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,9 +16,17 @@
     "url": "https://github.com/fatlard1993/color-picker/issues"
   },
   "homepage": "https://github.com/fatlard1993/color-picker#readme",
+  "eslintConfig": {
+    "extends": "rules"
+  },
+  "devDependencies": {
+    "eslint-config-rules": "github:fatlard1993/eslint-config-rules#2.x.x",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.15.3"
+  },
   "dependencies": {
-    "babel-preset-env": "^1.7.0",
-    "browser-sync": "^2.23.7",
-    "gulp": "^3.9.1"
+    "js-util": "github:fatlard1993/js-util#2.x.x",
+    "log": "github:fatlard1993/log#2.x.x",
+    "dom": "github:fatlard1993/dom#2.x.x"
   }
 }

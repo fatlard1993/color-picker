@@ -1,6 +1,0 @@
-#!/bin/bash
-
-npm i
-((cd ../swiss-army-knife && git pull) || (cd ../ && git clone https://github.com/fatlard1993/swiss-army-knife.git)) &&
-(cd ../swiss-army-knife && ./SETUP)
-gulp compile

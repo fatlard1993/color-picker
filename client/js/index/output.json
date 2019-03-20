@@ -1,6 +1,0 @@
-{
-	"babel": true,
-	"includes": [
-		"client/js/ColorPicker.js"
-	]
-}
