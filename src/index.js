@@ -90,8 +90,8 @@ var colorPicker = {
 
 			log()('[colorPicker] HSVfromString', type, color);
 
-			if(!ColorPicker[type +'_hsv']) log()('[colorPicker] HSVfromString', type, ' is an unsupported color type');
-			else return ColorPicker[type +'_hsv'].apply(null, color);
+			if(!colorPicker[type +'_hsv']) log()('[colorPicker] HSVfromString', type, ' is an unsupported color type');
+			else return colorPicker[type +'_hsv'].apply(null, color);
 		}
 	},
 	hsl_hsv: function(hue, sat, light){
@@ -206,9 +206,9 @@ var colorPicker = {
 	},
 	onPointerDown: function(evt){
 		if(['pickerArea', 'hueArea'].includes(evt.target.className)){
-			if(typeof Interact !== 'undefined') Interact.pointerTarget = null;
+			dom.interact.pointerTarget = null;
 
-			var moveFunc = ColorPicker[evt.target.className.replace('Area', '') +'Move'].bind(evt.target.parentElement);
+			var moveFunc = colorPicker[evt.target.className.replace('Area', '') +'Move'].bind(evt.target.parentElement);
 
 			var dropFunc = function(){
 				document.removeEventListener('mouseup', dropFunc);
@@ -227,4 +227,4 @@ var colorPicker = {
 	}
 };
 
-if(typeof Interact !== 'undefined') Interact.onPointerDown.push(colorPicker.onPointerDown);
+dom.interact.on('pointerDown', colorPicker.onPointerDown);
