@@ -1,6 +1,6 @@
 {
   "name": "color-picker",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A simple no-frills js color picker",
   "main": "src/index.js",
   "scripts": {
