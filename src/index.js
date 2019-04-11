@@ -206,8 +206,6 @@ var colorPicker = {
 	},
 	onPointerDown: function(evt){
 		if(['pickerArea', 'hueArea'].includes(evt.target.className)){
-			dom.interact.pointerTarget = null;
-
 			var moveFunc = colorPicker[evt.target.className.replace('Area', '') +'Move'].bind(evt.target.parentElement);
 
 			var dropFunc = function(){
