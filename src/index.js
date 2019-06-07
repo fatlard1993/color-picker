@@ -205,6 +205,8 @@ var colorPicker = {
 		});
 	},
 	onPointerDown: function(evt){
+		if(dom.isMobile && !evt.targetTouches) return;
+
 		if(['pickerArea', 'hueArea'].includes(evt.target.className)){
 			var moveFunc = colorPicker[evt.target.className.replace('Area', '') +'Move'].bind(evt.target.parentElement);
 
@@ -212,12 +214,14 @@ var colorPicker = {
 				document.removeEventListener('mouseup', dropFunc);
 				document.removeEventListener('mousemove', moveFunc);
 				document.removeEventListener('touchend', dropFunc);
+				document.removeEventListener('touchcancel', dropFunc);
 				document.removeEventListener('touchmove', moveFunc);
 			};
 
 			document.addEventListener('mouseup', dropFunc);
 			document.addEventListener('mousemove', moveFunc);
 			document.addEventListener('touchend', dropFunc);
+			document.addEventListener('touchcancel', dropFunc);
 			document.addEventListener('touchmove', moveFunc);
 
 			moveFunc(evt);
@@ -225,4 +229,5 @@ var colorPicker = {
 	}
 };
 
-dom.interact.on('pointerDown', colorPicker.onPointerDown);
+document.addEventListener('mousedown', colorPicker.onPointerDown);
+document.addEventListener('touchstart', colorPicker.onPointerDown);
