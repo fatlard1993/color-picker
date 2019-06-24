@@ -86,7 +86,7 @@ var colorPicker = {
 
 			color.length = 3;
 
-			for(var i = 0; i < color.length; i++) color[i] = parseInt(color[i]) || 0;
+			for(var x = 0; x < color.length; ++x) color[x] = parseInt(color[x]) || 0;
 
 			log()('[colorPicker] HSVfromString', type, color);
 
