@@ -130,7 +130,7 @@ var colorPicker = {
 
 		return hsv;
 	},
-	normalizePosition: function(evt, parent){
+	normalizePosition: function(evt, parent, offsetX, offsetY){
 		var position = {}, offsetParent = parent;
 
 		position.x = (evt.targetTouches) ? evt.targetTouches[0].pageX : evt.clientX;
@@ -143,8 +143,8 @@ var colorPicker = {
 			offsetParent = offsetParent.offsetParent;
 		}
 
-		position.x = Math.min(Math.max(0, position.x), parent.clientWidth);
-		position.y = Math.min(Math.max(0, position.y), parent.clientHeight);
+		position.x = Math.min(Math.max(offsetX, position.x), parent.clientWidth + offsetX);
+		position.y = Math.min(Math.max(offsetY, position.y), parent.clientHeight + offsetY);
 
 		return position;
 	},
@@ -157,11 +157,14 @@ var colorPicker = {
 		var elem = this;
 		var pickerArea = elem.getElementsByClassName('pickerArea')[0];
 		var indicator = pickerArea.getElementsByClassName('indicator')[0];
-		var position = colorPicker.normalizePosition(evt, pickerArea);
-		var pickerAreaWidth = pickerArea.clientWidth;
-		var pickerAreaHeight = pickerArea.clientHeight;
 		var indicatorOffsetX = indicator.offsetWidth / 2;
 		var indicatorOffsetY = indicator.offsetHeight / 2;
+		var position = colorPicker.normalizePosition(evt, pickerArea, indicatorOffsetX, indicatorOffsetY);
+		var pickerAreaWidth = pickerArea.clientWidth;
+		var pickerAreaHeight = pickerArea.clientHeight;
+
+		position.x -= indicatorOffsetX;
+		position.y -= indicatorOffsetY;
 
 		elem.color.s = position.x / pickerAreaWidth;
 		elem.color.v = (pickerAreaHeight - position.y) / pickerAreaHeight;
@@ -169,7 +172,7 @@ var colorPicker = {
 		elem.value = colorPicker.HSVtoRGBString(elem.color.h, elem.color.s, elem.color.v);
 
 		colorPicker.addAnimation(function hueAnim(){
-			colorPicker.setTransform(indicator, 'translate3d('+ (position.x - indicatorOffsetX) +'px, '+ (position.y - indicatorOffsetY) +'px, 0)');
+			colorPicker.setTransform(indicator, 'translate3d('+ position.x +'px, '+ position.y +'px, 0)');
 
 			elem.style.backgroundColor = elem.value;
 
@@ -186,16 +189,18 @@ var colorPicker = {
 		var pickerArea = elem.getElementsByClassName('pickerArea')[0];
 		var hueArea = elem.getElementsByClassName('hueArea')[0];
 		var indicator = hueArea.getElementsByClassName('indicator')[0];
-		var position = colorPicker.normalizePosition(evt, hueArea);
-		var hueAreaWidth = hueArea.clientWidth;
 		var indicatorOffset = indicator.offsetWidth / 2;
+		var position = colorPicker.normalizePosition(evt, hueArea, indicatorOffset, indicatorOffset);
+		var hueAreaWidth = hueArea.clientWidth;
+
+		position.x -= indicatorOffset;
 
 		elem.color.h = (position.x / hueAreaWidth) * 360;
 
 		elem.value = colorPicker.HSVtoRGBString(elem.color.h, elem.color.s, elem.color.v);
 
 		colorPicker.addAnimation(function hueAnim(){
-			colorPicker.setTransform(indicator, 'translate3d('+ (position.x - indicatorOffset) +'px, 0, 0)');
+			colorPicker.setTransform(indicator, 'translate3d('+ (position.x - (indicatorOffset / 2)) +'px, 0, 0)');
 
 			elem.style.backgroundColor = elem.value;
 
