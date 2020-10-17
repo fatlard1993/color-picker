@@ -1,8 +1,8 @@
-// includes dom log
-// babel
-/* global dom log */
+import Log from 'log';
+import dom from 'dom';
 
 var colorPicker = {
+	log: new Log({ tag: 'color-picker' }),
 	saturationSVG: '<svg width="100%" height="100%"><defs><linearGradient id="gradient-black" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" stop-color="#000000" stop-opacity="1"></stop><stop offset="100%" stop-color="#CC9A81" stop-opacity="0"></stop></linearGradient><linearGradient id="gradient-white" x1="0%" y1="100%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"></stop><stop offset="100%" stop-color="#CC9A81" stop-opacity="0"></stop></linearGradient></defs><rect x="0" y="0" width="100%" height="100%" fill="url(#gradient-white)"></rect><rect x="0" y="0" width="100%" height="100%" fill="url(#gradient-black)"></rect></svg>',
 	hueSVG: '<svg width="100%" height="100%"><defs><linearGradient id="gradient-hue" x1="100%" y1="0%" x2="0%" y2="0%"><stop offset="0%" stop-color="#FF0000" stop-opacity="1"></stop><stop offset="13%" stop-color="#FF00FF" stop-opacity="1"></stop><stop offset="25%" stop-color="#8000FF" stop-opacity="1"></stop><stop offset="38%" stop-color="#0040FF" stop-opacity="1"></stop><stop offset="50%" stop-color="#00FFFF" stop-opacity="1"></stop><stop offset="63%" stop-color="#00FF40" stop-opacity="1"></stop><stop offset="75%" stop-color="#0BED00" stop-opacity="1"></stop><stop offset="88%" stop-color="#FFFF00" stop-opacity="1"></stop><stop offset="100%" stop-color="#FF0000" stop-opacity="1"></stop></linearGradient></defs><rect x="0" y="0" width="100%" height="100%" fill="url(#gradient-hue)"></rect></svg>',
 	create: function(defaultColor){
@@ -30,7 +30,8 @@ var colorPicker = {
 		elem.color = {};
 
 		elem.set = function(color){
-			log()('[colorPicker] set', color);
+			colorPicker.log()('set', color);
+
 			if(!color) return;
 
 			elem.style.backgroundColor = elem.value = color;
@@ -54,7 +55,7 @@ var colorPicker = {
 		return '#'+ Math.floor(Math.random() * 16777215).toString(16);
 	},
 	HSVtoRGBString: function(hue, sat, value){
-		log()('[colorPicker] HSVtoRGBString', hue, sat, value);
+		colorPicker.log()('HSVtoRGBString', hue, sat, value);
 		var R, G, B, X, C;
 		var h = (hue % 360) / 60;
 
@@ -70,7 +71,7 @@ var colorPicker = {
 		return 'rgb('+ Math.floor(R * 255) +','+ Math.floor(G * 255) +','+ Math.floor(B * 255) +')';
 	},
 	HSVfromString: function(color){
-		log()('[colorPicker] HSVfromString', color);
+		colorPicker.log()('HSVfromString', color);
 
 		if(color[0] === '#' && (color.length === 4 || color.length === 7)){
 			if(color.length === 4){
@@ -88,14 +89,14 @@ var colorPicker = {
 
 			for(var x = 0; x < color.length; ++x) color[x] = parseInt(color[x]) || 0;
 
-			log()('[colorPicker] HSVfromString', type, color);
+			colorPicker.log()('HSVfromString', type, color);
 
-			if(!colorPicker[type +'_hsv']) log()('[colorPicker] HSVfromString', type, ' is an unsupported color type');
+			if(!colorPicker[type +'_hsv']) colorPicker.log()('HSVfromString', type, ' is an unsupported color type');
 			else return colorPicker[type +'_hsv'].apply(null, color);
 		}
 	},
 	hsl_hsv: function(hue, sat, light){
-		log()('[colorPicker] hsl_hsv', hue, sat, light);
+		colorPicker.log()('hsl_hsv', hue, sat, light);
 
 		sat /= 100;
 		light /= 100;
@@ -104,12 +105,12 @@ var colorPicker = {
 
 		var hsv = { h: hue, s: 2 * sat / (light + sat), v: light + sat };
 
-		log()('[colorPicker] hsl_hsv', hsv);
+		colorPicker.log()('hsl_hsv', hsv);
 
 		return hsv;
 	},
 	rgb_hsv: function(red, green, blue){
-		log()('[colorPicker] rgb_hsv', red, green, blue);
+		colorPicker.log()('rgb_hsv', red, green, blue);
 
 		red /= 255;
 		green /= 255;
@@ -126,7 +127,7 @@ var colorPicker = {
 
 		var hsv = { h: hue, s: sat, v: value };
 
-		log()('[colorPicker] rgb_hsv', hsv);
+		colorPicker.log()('rgb_hsv', hsv);
 
 		return hsv;
 	},
